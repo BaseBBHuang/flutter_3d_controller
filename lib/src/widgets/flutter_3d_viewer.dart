@@ -58,6 +58,12 @@ class Flutter3DViewer extends StatefulWidget {
   /// The inner model viewer html to use for the 3D model.
   final String? innerModelViewerHtml;
 
+  /// The max camera orbit to use for the 3D model.
+  final String? maxCameraOrbit;
+
+  /// The min camera orbit to use for the 3D model.
+  final String? minCameraOrbit;
+
   const Flutter3DViewer({
     super.key,
     required this.src,
@@ -69,6 +75,8 @@ class Flutter3DViewer extends StatefulWidget {
     this.onLoad,
     this.onError,
     this.innerModelViewerHtml,
+    this.maxCameraOrbit,
+    this.minCameraOrbit,
   })  : isObj = false,
         scale = null,
         cameraX = null,
@@ -86,6 +94,8 @@ class Flutter3DViewer extends StatefulWidget {
     this.onLoad,
     this.onError,
     this.innerModelViewerHtml,
+    this.maxCameraOrbit,
+    this.minCameraOrbit,
   })  : progressBarColor = null,
         controller = null,
         activeGestureInterceptor = true,
@@ -154,6 +164,8 @@ class _Flutter3DViewerState extends State<Flutter3DViewer> {
             disableTap: true,
             onProgress: widget.onProgress,
             innerModelViewerHtml: widget.innerModelViewerHtml,
+            maxCameraOrbit: widget.maxCameraOrbit,
+            minCameraOrbit: widget.minCameraOrbit,
             onLoad: (modelAddress) {
               _controller.onModelLoaded.value = true;
               widget.onLoad?.call(modelAddress);
