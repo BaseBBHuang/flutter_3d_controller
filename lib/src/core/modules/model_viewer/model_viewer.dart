@@ -93,6 +93,7 @@ class ModelViewer extends StatefulWidget {
     this.onProgress,
     this.onLoad,
     this.onError,
+    this.extraRelatedJs,
     super.key,
   });
 
@@ -602,6 +603,9 @@ class ModelViewer extends StatefulWidget {
   /// This callBack will call when model failed to load
   /// and will return string error
   final Function(String error)? onError;
+
+  /// Extra related js
+  final String? extraRelatedJs;
 
   @override
   State<ModelViewer> createState() => ModelViewerState();

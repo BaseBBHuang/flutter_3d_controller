@@ -104,6 +104,7 @@ class ModelViewerState extends State<ModelViewer> {
         key: _webViewKey,
         initialSettings: InAppWebViewSettings(
           transparentBackground: true,
+          javaScriptEnabled: true,
         ),
         initialUrlRequest: URLRequest(url: WebUri(_proxyURL)),
         onWebViewCreated: (controller) {
@@ -112,6 +113,10 @@ class ModelViewerState extends State<ModelViewer> {
           widget.onWebViewCreated?.call(controller);
         },
         onLoadStop: (controller, url) async {},
+        onConsoleMessage: (controller, consoleMessage) {
+          print(
+              "WebView Console: [${consoleMessage.messageLevel}] ${consoleMessage.message}");
+        },
         gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
           Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new),
         },
@@ -378,6 +383,7 @@ class ModelViewerState extends State<ModelViewer> {
       relatedJs: widget.relatedJs,
       id: widget.id,
       debugLogging: widget.debugLogging,
+      extraRelatedJs: widget.extraRelatedJs,
     );
   }
 }

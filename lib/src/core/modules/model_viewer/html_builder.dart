@@ -74,6 +74,7 @@ abstract class HTMLBuilder {
     final String? relatedCss,
     final String? relatedJs,
     final String? id,
+    final String? extraRelatedJs,
     final bool? debugLogging,
   }) {
     if (relatedCss != null) {
@@ -390,6 +391,13 @@ abstract class HTMLBuilder {
       modelViewerHtml
         ..writeln('<script>')
         ..write(relatedJs)
+        ..writeln('</script>');
+    }
+
+    if (extraRelatedJs != null) {
+      modelViewerHtml
+        ..writeln('<script>')
+        ..write(extraRelatedJs)
         ..writeln('</script>');
     }
 
