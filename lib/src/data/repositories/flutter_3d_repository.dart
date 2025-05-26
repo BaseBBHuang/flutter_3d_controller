@@ -63,4 +63,14 @@ class Flutter3DRepository extends IFlutter3DRepository {
   void resetCameraOrbit() {
     _datasource.resetCameraOrbit();
   }
+
+  @override
+  void enableCameraControls() {
+    _datasource.enableCameraControls();
+  }
+
+  @override
+  void disableCameraControls() {
+    _datasource.disableCameraControls();
+  }
 }

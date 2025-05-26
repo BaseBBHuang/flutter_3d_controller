@@ -153,11 +153,71 @@ class Flutter3DDatasource implements IFlutter3DDatasource {
   }
 
   @override
-  void executeCustomJsCode(String code,
-      [int codeDelay = 0,
-      int refresherDelay = 0,
-      bool refreshGestureInterceptor = false]) async {
+  void enableCameraControls() {
+    print('Flutter: Enabling camera controls');
+    _webViewController?.evaluateJavascript(source: '''
+      (() => {
+        try {
+          const modelViewer = document.querySelector('model-viewer');
+          if (!modelViewer) {
+            console.error('Model viewer element not found');
+            return false;
+          }
+          
+          console.log('Found model-viewer:', modelViewer);
+          modelViewer.setAttribute('camera-controls', '');
+          modelViewer.removeAttribute('disable-tap');
+          modelViewer.removeAttribute('disable-pan');
+          modelViewer.style.pointerEvents = 'auto';
+          
+          console.log('Camera controls enabled');
+          return true;
+        } catch (error) {
+          console.error('Error enabling camera controls:', error);
+          return false;
+        }
+      })();
+    ''');
+  }
+
+  @override
+  void disableCameraControls() {
+    print('Flutter: Disabling camera controls');
+    _webViewController?.evaluateJavascript(source: '''
+      (() => {
+        try {
+          const modelViewer = document.querySelector('model-viewer');
+          if (!modelViewer) {
+            console.error('Model viewer element not found');
+            return false;
+          }
+          
+          console.log('Found model-viewer:', modelViewer);
+          modelViewer.removeAttribute('camera-controls');
+          modelViewer.setAttribute('disable-tap', '');
+          modelViewer.setAttribute('disable-pan', '');
+          modelViewer.style.pointerEvents = 'none';
+          
+          console.log('Camera controls disabled');
+          return true;
+        } catch (error) {
+          console.error('Error disabling camera controls:', error);
+          return false;
+        }
+      })();
+    ''');
+  }
+
+  @override
+  void executeCustomJsCode(
+    String code, [
+    int codeDelay = 0,
+    int refresherDelay = 0,
+    bool refreshGestureInterceptor = false,
+  ]) async {
     await Future.delayed(Duration(milliseconds: codeDelay));
+
+    print('executeCustomJsCode: $code');
 
     _webViewController?.evaluateJavascript(source: '''
         (() => {

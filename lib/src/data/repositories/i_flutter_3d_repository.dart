@@ -41,4 +41,8 @@ abstract class IFlutter3DRepository {
 
   /// Causes camera target reset to default value
   void resetCameraOrbit();
+
+  void enableCameraControls();
+
+  void disableCameraControls();
 }

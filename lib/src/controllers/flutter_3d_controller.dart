@@ -115,4 +115,22 @@ class Flutter3DController extends IFlutter3DController {
       throw Flutter3dControllerLoadingException();
     }
   }
+
+  @override
+  void enableCameraControls() {
+    if (onModelLoaded.value) {
+      _repository?.enableCameraControls();
+    } else {
+      throw Flutter3dControllerLoadingException();
+    }
+  }
+
+  @override
+  void disableCameraControls() {
+    if (onModelLoaded.value) {
+      _repository?.disableCameraControls();
+    } else {
+      throw Flutter3dControllerLoadingException();
+    }
+  }
 }

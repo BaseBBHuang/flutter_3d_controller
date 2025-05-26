@@ -48,6 +48,12 @@ abstract class IFlutter3DDatasource {
   ///It will execute custom JS code
   void executeCustomJsCode(String code);
 
+  ///It will enable camera controls
+  void enableCameraControls();
+
+  ///It will disable camera controls
+  void disableCameraControls();
+
   ///It will execute custom JS code and returns result
   Future<dynamic> executeCustomJsCodeWithResult(String code);
 
