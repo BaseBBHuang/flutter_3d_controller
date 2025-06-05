@@ -67,6 +67,9 @@ class Flutter3DViewer extends StatefulWidget {
   /// The extra related js to use for the 3D model.final
   final String? extraRelatedJs;
 
+  /// The field of view to use for the 3D model.
+  final String? fieldOfView;
+
   const Flutter3DViewer({
     super.key,
     required this.src,
@@ -81,6 +84,7 @@ class Flutter3DViewer extends StatefulWidget {
     this.maxCameraOrbit,
     this.minCameraOrbit,
     this.extraRelatedJs,
+    this.fieldOfView,
   })  : isObj = false,
         scale = null,
         cameraX = null,
@@ -101,6 +105,7 @@ class Flutter3DViewer extends StatefulWidget {
     this.maxCameraOrbit,
     this.minCameraOrbit,
     this.extraRelatedJs,
+    this.fieldOfView,
   })  : progressBarColor = null,
         controller = null,
         activeGestureInterceptor = true,
@@ -172,6 +177,7 @@ class _Flutter3DViewerState extends State<Flutter3DViewer> {
             maxCameraOrbit: widget.maxCameraOrbit,
             minCameraOrbit: widget.minCameraOrbit,
             extraRelatedJs: widget.extraRelatedJs,
+            fieldOfView: widget.fieldOfView,
             onLoad: (modelAddress) {
               _controller.onModelLoaded.value = true;
               widget.onLoad?.call(modelAddress);

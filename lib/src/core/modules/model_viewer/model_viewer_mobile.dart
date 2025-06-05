@@ -160,6 +160,39 @@ class ModelViewerState extends State<ModelViewer> {
             ..headers.add('Content-Length', code.lengthInBytes.toString())
             ..add(code);
           await response.close();
+        case '/es-module-shims.js':
+          final code = await _readAsset(
+            'packages/flutter_3d_controller/assets/es-module-shims.js',
+          );
+          response
+            ..statusCode = HttpStatus.ok
+            ..headers
+                .add('Content-Type', 'application/javascript;charset=UTF-8')
+            ..headers.add('Content-Length', code.lengthInBytes.toString())
+            ..add(code);
+          await response.close();
+        case '/three.module.min.js':
+          final code = await _readAsset(
+            'packages/flutter_3d_controller/assets/three.module.min.js',
+          );
+          response
+            ..statusCode = HttpStatus.ok
+            ..headers
+                .add('Content-Type', 'application/javascript;charset=UTF-8')
+            ..headers.add('Content-Length', code.lengthInBytes.toString())
+            ..add(code);
+          await response.close();
+        case '/model_viewer_effects.min.js':
+          final code = await _readAsset(
+            'packages/flutter_3d_controller/assets/model_viewer_effects.min.js',
+          );
+          response
+            ..statusCode = HttpStatus.ok
+            ..headers
+                .add('Content-Type', 'application/javascript;charset=UTF-8')
+            ..headers.add('Content-Length', code.lengthInBytes.toString())
+            ..add(code);
+          await response.close();
         case '/model':
           if (url.isAbsolute && !url.isScheme('file')) {
             await response.redirect(url);

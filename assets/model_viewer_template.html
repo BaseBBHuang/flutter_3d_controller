@@ -23,5 +23,20 @@
 
     /* other-css */
 </style>
-<script type="module" src="model_viewer.min.js" defer></script>
+<!-- Import Three.js first -->
+<script async="" src="./es-module-shims.js"></script>
+<script type="importmap">
+    {
+      "imports": {
+        "three": "./three.module.min.js",
+        "model-viewer": "./model_viewer.min.js",
+        "model-viewer-effects": "./model_viewer_effects.min.js"
+      }
+    }
+</script>
+  <script type="module">
+    import * as three from 'three';
+    import * as modelViewer from 'model-viewer';
+    import * as modelViewerEffects from 'model-viewer-effects';
+  </script>
 <!-- body -->
