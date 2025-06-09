@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:convert' show utf8;
 import 'dart:io' show File, HttpServer, HttpStatus, InternetAddress;
 import 'package:flutter/foundation.dart';
@@ -8,6 +9,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:path/path.dart' as p;
+
+// Import from the library
+import '../../../models/hotspot_model.dart';
 import 'html_builder.dart';
 import 'model_viewer.dart';
 
@@ -305,6 +309,56 @@ class ModelViewerState extends State<ModelViewer> {
         bool result = isOutTouch(double.tryParse(coordinates[0]) ?? 0,
             double.tryParse(coordinates[1]) ?? 0);
         if (result) {
+          await resetGestureInterceptor('flutter-3d-controller');
+        }
+      },
+    );
+
+    // hotspot channel
+    webViewController.addJavaScriptHandler(
+      handlerName: "hotspotChannel",
+      callback: (args) async {
+        debugPrint('hotspotChannel: ${args.first}');
+        final data = args.first.toString();
+
+        try {
+          // Check if data contains JSON information (has the | delimiter)
+          if (data.contains('|')) {
+            // Parse the enhanced hotspot data using our model
+            final hotspotModel = HotspotModel.fromString(data);
+
+            if (hotspotModel != null) {
+              debugPrint('Hotspot ID: ${hotspotModel.id}');
+              debugPrint('Position: ${hotspotModel.position}');
+              debugPrint('Orbit: ${hotspotModel.orbit}');
+              debugPrint('Target: ${hotspotModel.target}');
+              debugPrint('Text: ${hotspotModel.textContent}');
+
+              // Use the onHotspotTap callback if provided
+              if (widget.onHotspotTap != null) {
+                widget.onHotspotTap!(hotspotModel);
+              }
+
+              // Still check if we need to reset gesture interceptor
+              bool result = isOutTouch(hotspotModel.x, hotspotModel.y);
+              if (result) {
+                await resetGestureInterceptor('flutter-3d-controller');
+              }
+
+              return;
+            }
+          }
+
+          // Fallback to coordinate-only processing if JSON parsing fails or no | delimiter
+          List<String> coordinates = data.split(',');
+          bool result = isOutTouch(double.tryParse(coordinates[0]) ?? 0,
+              double.tryParse(coordinates[1]) ?? 0);
+          if (result) {
+            await resetGestureInterceptor('flutter-3d-controller');
+          }
+        } catch (e) {
+          debugPrint('Error processing hotspot data: $e');
+          // Ensure we reset gesture interceptor in case of error
           await resetGestureInterceptor('flutter-3d-controller');
         }
       },

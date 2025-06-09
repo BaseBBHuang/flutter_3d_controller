@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+import '../../../models/hotspot_model.dart';
 import 'model_viewer_stub.dart'
     if (dart.library.io) 'model_viewer_mobile.dart'
     if (dart.library.js_interop) 'model_viewer_web.dart';
@@ -94,6 +95,7 @@ class ModelViewer extends StatefulWidget {
     this.onLoad,
     this.onError,
     this.extraRelatedJs,
+    this.onHotspotTap,
     super.key,
   });
 
@@ -606,6 +608,10 @@ class ModelViewer extends StatefulWidget {
 
   /// Extra related js
   final String? extraRelatedJs;
+  
+  /// Callback function that is called when a hotspot is tapped.
+  /// Provides the HotspotModel containing all hotspot information.
+  final Function(HotspotModel hotspot)? onHotspotTap;
 
   @override
   State<ModelViewer> createState() => ModelViewerState();

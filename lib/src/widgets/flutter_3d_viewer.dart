@@ -5,6 +5,7 @@ import 'package:flutter_3d_controller/src/core/modules/obj_viewer/obj_viewer.dar
 import 'package:flutter_3d_controller/src/data/datasources/i_flutter_3d_datasource.dart';
 import 'package:flutter_3d_controller/src/data/repositories/flutter_3d_repository.dart';
 import 'package:flutter_3d_controller/src/core/modules/model_viewer/model_viewer.dart';
+import 'package:flutter_3d_controller/src/models/hotspot_model.dart';
 import 'package:flutter_3d_controller/src/utils/utils.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_3d_controller/src/core/modules/obj_viewer/object.dart'
@@ -69,6 +70,10 @@ class Flutter3DViewer extends StatefulWidget {
 
   /// The field of view to use for the 3D model.
   final String? fieldOfView;
+  
+  /// Callback function that is called when a hotspot is tapped.
+  /// Provides the HotspotModel containing all hotspot information.
+  final Function(HotspotModel hotspot)? onHotspotTap;
 
   const Flutter3DViewer({
     super.key,
@@ -85,6 +90,7 @@ class Flutter3DViewer extends StatefulWidget {
     this.minCameraOrbit,
     this.extraRelatedJs,
     this.fieldOfView,
+    this.onHotspotTap,
   })  : isObj = false,
         scale = null,
         cameraX = null,
@@ -106,6 +112,7 @@ class Flutter3DViewer extends StatefulWidget {
     this.minCameraOrbit,
     this.extraRelatedJs,
     this.fieldOfView,
+    this.onHotspotTap,
   })  : progressBarColor = null,
         controller = null,
         activeGestureInterceptor = true,
@@ -178,6 +185,7 @@ class _Flutter3DViewerState extends State<Flutter3DViewer> {
             minCameraOrbit: widget.minCameraOrbit,
             extraRelatedJs: widget.extraRelatedJs,
             fieldOfView: widget.fieldOfView,
+            onHotspotTap: widget.onHotspotTap,
             onLoad: (modelAddress) {
               _controller.onModelLoaded.value = true;
               widget.onLoad?.call(modelAddress);
